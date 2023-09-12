@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Builder;
+import lombok.Getter;
 import org.knowm.xchange.currency.Currency;
 
 /**
@@ -13,6 +15,8 @@ import org.knowm.xchange.currency.Currency;
  * <p>Funding information contains the detail of deposit/withdrawal transaction for a specific
  * currency
  */
+@Getter
+@Builder()
 public final class FundingRecord implements Serializable {
 
   private static final long serialVersionUID = 3788398035845873448L;

@@ -15,6 +15,8 @@ import org.knowm.xchange.exceptions.NotAvailableFromExchangeException;
 import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.instrument.Instrument;
 import org.knowm.xchange.service.BaseService;
+import org.knowm.xchange.dto.account.TransferRecord;
+import org.knowm.xchange.service.account.params.TransferHistoryParam;
 import org.knowm.xchange.service.trade.params.DefaultWithdrawFundsParams;
 import org.knowm.xchange.service.trade.params.TradeHistoryParams;
 import org.knowm.xchange.service.trade.params.WithdrawFundsParams;
@@ -167,6 +169,36 @@ public interface AccountService extends BaseService {
    */
   default List<FundingRecord> getFundingHistory(TradeHistoryParams params) throws IOException {
     throw new NotYetImplementedForExchangeException("getFundingHistory");
+  }
+
+  /**
+   * @return list of transfer history if available or an empty list otherwise. This should never
+   *     return null.
+   * @throws ExchangeException - Indication that the exchange reported some kind of error with the
+   *     request or response
+   * @throws NotAvailableFromExchangeException - Indication that the exchange does not support the
+   *     requested function or data
+   * @throws NotYetImplementedForExchangeException - Indication that the exchange supports the
+   *     requested function or data, but it has not yet been implemented
+   * @throws IOException - Indication that a networking error occurred while fetching JSON data
+   */
+  default List<TransferRecord> getTransferHistory(TransferHistoryParam params) throws IOException {
+    throw new NotYetImplementedForExchangeException("getTransferHistory");
+  }
+
+  /**
+   * @return list of transfer history if available or an empty list otherwise. This should never
+   *     return null.
+   * @throws ExchangeException - Indication that the exchange reported some kind of error with the
+   *     request or response
+   * @throws NotAvailableFromExchangeException - Indication that the exchange does not support the
+   *     requested function or data
+   * @throws NotYetImplementedForExchangeException - Indication that the exchange supports the
+   *     requested function or data, but it has not yet been implemented
+   * @throws IOException - Indication that a networking error occurred while fetching JSON data
+   */
+  default List<TransferRecord> getInternalTransferHistory(TransferHistoryParam params) throws IOException {
+    throw new NotYetImplementedForExchangeException("getInternalTransferHistory");
   }
 
   /**
