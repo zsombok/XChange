@@ -14,6 +14,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
+import si.mazi.rescu.ParamsDigest;
+import si.mazi.rescu.SynchronizedValueFactory;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,8 +26,8 @@ public interface BitDotComAuthenticated {
   @Path("/um/v1/accounts")
   BitDotComResponse<BitDotComAccounts> umAccounts(
     @HeaderParam(HEADER_API_KEY) String apiKey,
-    @QueryParam(QUERY_PARAM_TIMESTAMP) long timestamp,
-    @QueryParam(QUERY_PARAM_SIGNATURE) String signature,
+    @QueryParam(QUERY_PARAM_TIMESTAMP) SynchronizedValueFactory<Long> timestamp,
+    @QueryParam(QUERY_PARAM_SIGNATURE) ParamsDigest signature,
     @QueryParam("with_linear_pair_margins") String withLinearPairMargins // "true" to include
   ) throws IOException;
 }

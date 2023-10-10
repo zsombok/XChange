@@ -3,7 +3,9 @@ package org.knowm.xchange.bitdotcom.dto.account;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
+import lombok.Data;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrencyLevelDetail {
 

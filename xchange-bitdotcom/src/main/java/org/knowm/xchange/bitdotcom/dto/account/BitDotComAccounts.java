@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BitDotComAccounts {
 
@@ -86,5 +90,16 @@ public class BitDotComAccounts {
   @JsonProperty("linear_pair_margins")
   private List<LinearPairMargin> linearPairMargins;
 
-  // Include getters and setters for all properties
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  private static class LinearPairMargin {
+
+    @JsonProperty("pair")
+    private String pair;
+
+    @JsonProperty("initial_margin")
+    private BigDecimal initialMargin;
+
+    @JsonProperty("maintenance_margin")
+    private BigDecimal maintenanceMargin;
+  }
 }

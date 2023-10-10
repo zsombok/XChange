@@ -9,6 +9,7 @@ import org.knowm.xchange.bitdotcom.dto.SystemTime;
 import org.knowm.xchange.client.ExchangeRestProxyBuilder;
 import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.service.BaseResilientExchangeService;
+import si.mazi.rescu.ParamsDigest;
 import si.mazi.rescu.SynchronizedValueFactory;
 
 public class BitDotComBaseService extends BaseResilientExchangeService<BitDotComExchange> {
@@ -16,8 +17,7 @@ public class BitDotComBaseService extends BaseResilientExchangeService<BitDotCom
   protected final String apiKey;
   protected final BitDotCom bitDotCom;
   protected final BitDotComAuthenticated bitDotComAuthenticated;
-
-  //  protected final ParamsDigest signatureCreator;
+  protected final ParamsDigest signatureCreator;
 
   protected BitDotComBaseService(
       BitDotComExchange exchange, ResilienceRegistries resilienceRegistries) {
@@ -30,33 +30,8 @@ public class BitDotComBaseService extends BaseResilientExchangeService<BitDotCom
                 BitDotComAuthenticated.class, exchange.getExchangeSpecification())
             .build();
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
-    //    this.signatureCreator =
-    //
-    // BitDotComHmacDigest.createInstance(exchange.getExchangeSpecification().getSecretKey());
-  }
-
-  public Long getRecvWindow() {
-    Object obj =
-        exchange.getExchangeSpecification().getExchangeSpecificParametersItem("recvWindow");
-    if (obj == null) return null;
-    if (obj instanceof Number) {
-      long value = ((Number) obj).longValue();
-      if (value < 0 || value > 60000) {
-        throw new IllegalArgumentException(
-            "Exchange-specific parameter \"recvWindow\" must be in the range [0, 60000].");
-      }
-      return value;
-    }
-    if (obj.getClass().equals(String.class)) {
-      try {
-        return Long.parseLong((String) obj, 10);
-      } catch (NumberFormatException e) {
-        throw new IllegalArgumentException(
-            "Exchange-specific parameter \"recvWindow\" could not be parsed.", e);
-      }
-    }
-    throw new IllegalArgumentException(
-        "Exchange-specific parameter \"recvWindow\" could not be parsed.");
+    this.signatureCreator =
+        BitDotComDigest.createInstance(exchange.getExchangeSpecification().getSecretKey());
   }
 
   public SynchronizedValueFactory<Long> getTimestampFactory() {

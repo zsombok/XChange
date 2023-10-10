@@ -43,9 +43,7 @@ public class BitDotComExchange extends BaseExchange implements Exchange {
 
   @Override
   protected void initServices() {
-    //    this.timestampFactory = new
-    // BitDotComTimestampFactory(getExchangeSpecification().getResilience(),
-    // getResilienceRegistries());
+    this.timestampFactory = new BitDotComTimestampFactory();
     this.marketDataService = new BitDotComMarketDataService(this, getResilienceRegistries());
     this.tradeService = new BitDotComTradeService(this, getResilienceRegistries());
     this.accountService = new BitDotComAccountService(this, getResilienceRegistries());
